@@ -42,13 +42,13 @@
             display-name = "Base JIS";
             bindings = <
 /* row 0 */
-&kp ESC    &kp N1     &kp N2     &kp N3     &kp N4       &kp N5                 &kp N8       &kp N9     &kp N0       &kp MINUS  &kp JP_CARET  &kp BSPC
+&kp ESC    &kp N1     &kp N2     &kp N3     &kp N4       &kp N5                 &kp N7 &kp N8       &kp N9     &kp N0       &kp MINUS  &kp JP_CARET 
 /* row 1 */
 &kp TAB    &kp Q      &kp W      &kp E      &kp R        &kp T                  &kp Y        &kp U      &kp I        &kp O      &kp P         &kp JP_YEN
 /* row 2 */
-&kp LCTRL  &kp A      &kp S      &kp D      &kp F        &kp G      &kp JP_AT    &kp JP_RBKT  &kp H      &kp J        &kp K      &kp L         &kp SEMI  &kp JP_COLON
+&kp LCTRL  &kp A      &kp S      &kp D      &kp F        &kp G      &kp N6   &kp JP_LBKT  &kp H      &kp J        &kp K      &kp L         &kp SEMI  &kp JP_COLON
 /* row 3 */
-&kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp N6       &kp N7       &kp N      &kp M        &kp COMMA  &kp DOT       &kp JP_QMARK  &kp JP_UNDER
+&kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp JP_AT   &kp JP_RBKT  &kp N      &kp M        &kp COMMA  &kp DOT       &kp JP_QMARK  &kp JP_UNDER
 /* row 4 */
 &kp LGUI   &kp LALT   &kp LGUI   &kp BSPC   &mo SHORTCUT  &kp SPACE  &mt LCTRL LANGUAGE_2  &mt LGUI LANGUAGE_1  &mt LSHFT RET  &lt NAV COMMA  &lt MOUSE DOT  &kp LEFT  &kp DOWN  &kp RIGHT
             >;
