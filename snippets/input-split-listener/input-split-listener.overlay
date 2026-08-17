@@ -1,4 +1,15 @@
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
 / {
+    input_processors {
+        disable_trackpad_left_click: disable_trackpad_left_click {
+            compatible = "zmk,input-processor-behaviors";
+            #input-processor-cells = <0>;
+            codes = <INPUT_BTN_0>;
+            bindings = <&none>;
+        };
+    };
+
     split_inputs {
         #address-cells = <1>;
         #size-cells = <0>;
@@ -16,6 +27,7 @@
 
         input-processors =
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-            <&zip_scroll_scaler 1 8>;
+            <&zip_scroll_scaler 1 8>,
+            <&disable_trackpad_left_click>;
     };
 };
