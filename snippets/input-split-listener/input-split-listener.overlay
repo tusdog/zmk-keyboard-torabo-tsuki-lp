@@ -1,4 +1,4 @@
-/{
+/ {
     split_inputs {
         #address-cells = <1>;
         #size-cells = <0>;
@@ -13,8 +13,9 @@
         compatible = "zmk,input-listener";
         device = <&pointing_device_split>;
         status = "okay";
+
         input-processors =
-    <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-    <&zip_scroll_scaler 1 2>;
-     };
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_scroll_scaler 1 2>;
+    };
 };
