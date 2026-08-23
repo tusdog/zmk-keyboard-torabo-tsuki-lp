@@ -183,7 +183,7 @@
                 &my_lt MOUSE BSPC
                 &my_lt SHORTCUT SPACE
                 &lt MOUSE LANGUAGE_2
-
+                
                 &mt LGUI LANGUAGE_1
                 &mt LSHFT RET
                 &lt NAV COMMA
@@ -248,7 +248,7 @@
             display-name = "Mouse / BT";
             bindings = <
                 /* row 0 */
-                &trans  &trans  &trans  &trans  &trans  &trans
+                &bt BT_CLR  &bt BT_SEL 4  &bt BT_SEL 5  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &trans
 
                 /*
