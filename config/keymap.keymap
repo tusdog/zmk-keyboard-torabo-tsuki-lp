@@ -1,5 +1,13 @@
 /*
  * torabo-tsuki LP L layout (66 positions)
+ * Adapted from the attached ergo68 Japanese cheat sheet.
+ *
+ * Binding order used by the official torabo-tsuki LP L layout:
+ * row 0: 6 left + 6 right
+ * row 1: 6 left + 6 right
+ * row 2: 7 left + 7 right
+ * row 3: 7 left + 7 right
+ * row 4: 7 left + 7 right
  *
  * Host OS keyboard type must be Japanese/JIS (106/109).
  */
@@ -17,7 +25,7 @@
 #define MOUSE     3
 #define SCROLL    4
 
-/* JIS aliases */
+/* JIS aliases. These are HID positions interpreted by a JIS host layout. */
 #define JP_CARET  EQUAL          /* ^ / ~ */
 #define JP_AT     LEFT_BRACKET   /* @ / ` */
 #define JP_LBKT   RIGHT_BRACKET  /* [ / { */
@@ -34,6 +42,9 @@
          * Generic layer-tap:
          *   hold -> &mo <layer>
          *   tap  -> &kp <key>
+         *
+         * quick-tap-ms allows tap -> quick second hold to keep the tap-side
+         * key held. This is especially useful for Backspace auto-repeat.
          */
         my_lt: my_layer_tap {
             compatible = "zmk,behavior-hold-tap";
@@ -79,8 +90,8 @@
     };
 
     /*
-     * Mouse scrolling wrappers.
-     * ZMK Studio displays these as Scroll Up/Down/Left/Right.
+     * Zero-parameter wrappers around mouse scrolling.
+     * These can be exposed as user-defined behaviors in ZMK Studio.
      */
     macros {
         scroll_up: scroll_up {
@@ -135,11 +146,6 @@
     keymap {
         compatible = "zmk,keymap";
 
-        /*
-         * =========================================================
-         * BASE
-         * =========================================================
-         */
         base_layer {
             display-name = "Base JIS";
             bindings = <
@@ -161,11 +167,26 @@
                 &kp LCTRL  &kp A      &kp S      &kp D      &lt SCROLL F &kp G      &kp N6
                 &kp JP_LBKT  &kp H    &kp J      &kp K      &kp L        &kp SEMI   &kp JP_COLON
 
-                /* row 3 */
+                /*
+                 * row 3
+                 *
+                 * Right hand:
+                 * ]  N  M  ,  /  ↑  _
+                 *
+                 * /:
+                 *   single tap -> /
+                 *   double tap -> .
+                 */
                 &kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp JP_AT
                 &kp JP_RBKT  &kp N    &kp M      &comma_td   &slash_td    &kp UP      &kp JP_UNDER
 
-                /* row 4 */
+                /*
+                 * row 4
+                 *
+                 * LANGUAGE_2:
+                 *   tap  -> LANGUAGE_2
+                 *   hold -> Mouse / BT
+                 */
                 &kp LGUI   &kp LALT   &kp LGUI   &kp JP_AT
                 &my_lt MOUSE BSPC
                 &my_lt SHORTCUT SPACE
@@ -181,11 +202,6 @@
             >;
         };
 
-        /*
-         * =========================================================
-         * NAV
-         * =========================================================
-         */
         nav_layer {
             display-name = "Nav";
             bindings = <
@@ -200,109 +216,47 @@
                 /*
                  * row 2
                  *
-                 * Physical F:
+                 * physical F:
                  *   tap  -> Ctrl+F
                  *   hold -> Scroll mode
                  */
-                &trans  &kp LC(A)  &kp LC(S)  &trans
-                &lt SCROLL LC(F)
-                &trans  &kp F6
-
-                &kp F7
-                &msc SCRL_DOWN
-                &kp LEFT
-                &kp DOWN
-                &kp RIGHT
-                &trans
-                &trans
+                &trans  &kp LC(A)  &kp LC(S)  &trans     &lt SCROLL LC(F)  &trans  &kp F6
+                &kp F7  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
 
                 /* row 3 */
                 &trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(B)  &trans
                 &trans  &kp LC(N)  &kp LC(M)  &kp LS(COMMA)  &kp LS(DOT)  &kp LG(UP)  &trans
 
                 /* row 4 */
-                &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                &trans  &trans  &trans  &trans  &kp LG(LEFT)  &kp LG(DOWN)  &kp LG(RIGHT)
+                &trans  &trans     &trans     &trans     &trans     &trans     &trans
+                &trans  &trans     &trans     &trans     &kp LG(LEFT)  &kp LG(DOWN)  &kp LG(RIGHT)
             >;
         };
 
-        /*
-         * =========================================================
-         * SHORTCUT
-         * =========================================================
-         */
         shortcut_layer {
             display-name = "Shortcut";
             bindings = <
-                /* row 0 */
-                &trans
-                &kp LC(LG(N1))
-                &kp LC(LG(N2))
-                &kp LC(LG(N3))
-                &kp LC(LG(N4))
-                &kp LC(LG(N5))
-
-                &kp LC(LG(N8))
-                &kp LC(LG(N9))
-                &kp LC(LG(N0))
-                &kp LS(MINUS)
-                &kp LS(JP_CARET)
-                &kp BSPC
+                /* row 0: Ctrl + Win/Cmd + number */
+                &trans  &kp LC(LG(N1))  &kp LC(LG(N2))  &kp LC(LG(N3))  &kp LC(LG(N4))  &kp LC(LG(N5))
+                &kp LC(LG(N8))  &kp LC(LG(N9))  &kp LC(LG(N0))  &kp LS(MINUS)  &kp LS(JP_CARET)  &kp BSPC
 
                 /* row 1 */
-                &trans
-                &trans
-                &kp LG(W)
-                &msc SCRL_RIGHT
-                &msc SCRL_LEFT
-                &msc SCRL_UP
-
-                &msc SCRL_UP
-                &msc SCRL_RIGHT
-                &kp UP
-                &msc SCRL_LEFT
-                &kp LS(N6)
-                &kp LS(JP_LBKT)
+                &trans  &trans  &kp LG(W)  &msc SCRL_RIGHT  &msc SCRL_LEFT  &msc SCRL_UP
+                &msc SCRL_UP  &msc SCRL_RIGHT  &kp UP  &msc SCRL_LEFT  &kp LS(N6)  &kp LS(JP_LBKT)
 
                 /*
                  * row 2
                  *
-                 * Physical F:
+                 * physical F:
                  *   tap  -> GUI+F
                  *   hold -> Scroll mode
                  */
-                &trans
-                &kp LG(A)
-                &kp LG(S)
-                &trans
-                &lt SCROLL LG(F)
-                &msc SCRL_DOWN
-                &trans
-
-                &kp JP_LBKT
-                &msc SCRL_DOWN
-                &kp LEFT
-                &kp DOWN
-                &kp RIGHT
-                &kp LS(JP_COLON)
-                &kp LS(JP_RBKT)
+                &trans  &kp LG(A)  &kp LG(S)  &trans  &lt SCROLL LG(F)  &msc SCRL_DOWN  &trans
+                &kp JP_LBKT  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &kp LS(JP_COLON)  &kp LS(JP_RBKT)
 
                 /* row 3 */
-                &trans
-                &kp LG(Z)
-                &kp LG(X)
-                &kp LG(C)
-                &kp LG(V)
-                &kp LG(B)
-                &kp LC(LG(N6))
-
-                &kp LC(LG(N7))
-                &kp LG(N)
-                &kp LG(M)
-                &kp LS(COMMA)
-                &kp LS(DOT)
-                &kp LG(UP)
-                &kp JP_RO
+                &trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)  &kp LC(LG(N6))
+                &kp LC(LG(N7))  &kp LG(N)  &kp LG(M)  &kp LS(COMMA)  &kp LS(DOT)  &kp LG(UP)  &kp JP_RO
 
                 /* row 4 */
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -311,21 +265,27 @@
         };
 
         /*
-         * =========================================================
-         * MOUSE / BT
-         *
-         * Latest ZMK Studio arrangement:
+         * Mouse / BT
          *
          * Y = Show All Applications
          * U = Ctrl + Left
          * I = Ctrl + Right
          * O = Show All Windows
          *
+         * 6 = BT 0
+         * . = BT 1
+         * [ = BT 2
+         * ] = BT 3
+         *
          * H = Scroll Up
          * N = Scroll Down
          * M = Scroll Left
          * , = Scroll Right
-         * =========================================================
+         *
+         * J = Left Click
+         * K = Right Click
+         * L = Back
+         * ; = Forward
          */
         mouse_layer {
             display-name = "Mouse / BT";
@@ -344,21 +304,41 @@
                 &trans
                 &trans
 
-                /* row 2 */
-                &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                /*
+                 * row 2
+                 *
+                 * 6 = BT 0
+                 *
+                 * [ = BT 2
+                 * H = Scroll Up
+                 * J = MB1 / Left Click
+                 * K = MB2 / Right Click
+                 * L = MB4 / Back
+                 * ; = MB5 / Forward
+                 */
+                &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_SEL 0
 
-                &trans
+                &bt BT_SEL 2
                 &scroll_up
-                &trans
-                &trans
-                &trans
-                &trans
+                &mkp MB1
+                &mkp MB2
+                &mkp MB4
+                &mkp MB5
                 &trans
 
-                /* row 3 */
-                &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                /*
+                 * row 3
+                 *
+                 * . = BT 1
+                 *
+                 * ] = BT 3
+                 * N = Scroll Down
+                 * M = Scroll Left
+                 * , = Scroll Right
+                 */
+                &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_SEL 1
 
-                &trans
+                &bt BT_SEL 3
                 &scroll_down
                 &scroll_left
                 &scroll_right
@@ -380,12 +360,10 @@
         };
 
         /*
-         * =========================================================
-         * SCROLL
+         * Scroll layer
          *
-         * Fを押している間だけ有効になるレイヤー。
-         * 全キーtransparentなので、下のレイヤーはそのまま使える。
-         * =========================================================
+         * Fを長押ししている間だけ有効。
+         * 全キーtransparentなので、下にある通常レイヤーは維持される。
          */
         scroll_layer {
             display-name = "Scroll";
@@ -415,15 +393,20 @@
 };
 
 /*
- * Normal:
- *     trackball X/Y -> cursor movement
+ * 通常時:
+ *   Trackball X/Y -> Cursor
  *
- * SCROLL layer active:
- *     trackball X/Y -> horizontal/vertical scrolling
+ * F長押し中:
+ *   Trackball X/Y -> Scroll
+ *
+ * スクロール量:
+ *   1/6
  */
 &pointing_listener {
     scroll_mode {
         layers = <SCROLL>;
-        input-processors = <&zip_xy_to_scroll_mapper>;
+        input-processors =
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_scaler 1 6>;
     };
 };
