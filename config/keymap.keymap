@@ -242,7 +242,7 @@
 
                 /* row 1 */
                 &trans  &trans  &kp LG(W)  &msc SCRL_RIGHT  &msc SCRL_LEFT  &msc SCRL_UP
-                &msc SCRL_UP  &msc SCRL_RIGHT  &kp UP  &msc SCRL_LEFT  &kp LS(N6)  &kp LS(JP_LBKT)
+                &msc SCRL_UP  &msc SCRL_RIGHT  &kp UP  &msc SCRL_LEFT  &kp LG(P)  &kp LS(JP_LBKT)
 
                 /*
                  * row 2
@@ -377,7 +377,7 @@
                 &trans  &trans  &trans  &trans  &trans  &trans
 
                 /* row 2 */
-                &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &kp LG(MINUS)  &kp LG(N0)  &kp LG(LS(SEMI))  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans
 
                 /* row 3 */
@@ -407,6 +407,6 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_to_scroll_mapper>,
-            <&zip_scroll_scaler 1 6>;
+            <&zip_scroll_scaler 1 12>;
     };
 };
