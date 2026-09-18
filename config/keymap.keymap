@@ -179,7 +179,7 @@
                  *   double tap -> .
                  */
                 &kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp JP_AT
-                &kp JP_RBKT  &kp N    &kp M      &comma_td   &slash_td    &kp UP      &kp JP_UNDER
+                &kp JP_RBKT  &kp N    &kp M      &comma_td   &kp JP_QMARK    &kp UP      &kp JP_UNDER
 
                 /*
                  * row 4
@@ -194,7 +194,7 @@
                 &lt MOUSE LANGUAGE_2
 
                 &mt LGUI LANGUAGE_1
-                &mt LSHFT RET
+                &lt NAV RET
                 &lt NAV COMMA
                 &lt MOUSE DOT
                 &kp LEFT
@@ -243,7 +243,7 @@
 
                 /* row 1 */
                 &trans  &trans  &kp LG(W)  &msc SCRL_RIGHT  &msc SCRL_LEFT  &msc SCRL_UP
-                &msc SCRL_UP  &msc SCRL_RIGHT  &kp UP  &msc SCRL_LEFT  &kp LG(P)  &kp LS(JP_LBKT)
+                &msc SCRL_UP  &msc SCRL_RIGHT  &kp UP  &kp LG(O)  &kp LG(P)  &kp LS(JP_LBKT)
 
                 /*
                  * row 2
@@ -317,8 +317,7 @@
                  * L = MB4 / Back
                  * ; = MB5 / Forward
                  */
-                &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_SEL 0
-
+                &trans  &kp LG(N0)  &kp LG(MINUS)  &kp LG(SEMI)  &trans  &trans  &bt BT_SEL 0
                 &bt BT_SEL 2
                 &scroll_up
                 &mkp MB1
@@ -344,7 +343,7 @@
                 &scroll_left
                 &scroll_right
                 &trans
-                &kp UP
+                &kp LG(UP)
                 &trans
 
                 /* row 4 */
@@ -354,9 +353,9 @@
                 &trans
                 &trans
                 &trans
-                &kp LEFT
-                &kp DOWN
-                &kp RIGHT
+                &kp LG(LEFT)
+                &kp LG(DOWN)
+                &kp LG(RIGHT)
             >;
         };
 
