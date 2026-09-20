@@ -43,5 +43,9 @@ manifest:
       remote: cormoran
       # Last v0.3-era revision before the module migrated to ZMK v0.4.
       revision: 851661cd21f2aded8ec649da86e01a207dc4b973
+    - name: zmk-module-settings-rpc
+      remote: cormoran
+      # v0.3-era revision with split activity-settings synchronization.
+      revision: ad1c995cf910ca989ecd6352a1d0b41ccb18362c
   self:
     path: config
