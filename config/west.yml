@@ -39,5 +39,9 @@ manifest:
       remote: cormoran
       # v0.3-era revision from before the custom-settings storage migration.
       revision: dbf92f764de8b6ffd60bf5850514302875fe2570
+    - name: zmk-module-ble-management
+      remote: cormoran
+      # Last v0.3-era revision before the module migrated to ZMK v0.4.
+      revision: 851661cd21f2aded8ec649da86e01a207dc4b973
   self:
     path: config
