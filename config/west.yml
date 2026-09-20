@@ -6,11 +6,14 @@ manifest:
       url-base: https://github.com/sekigon-gonnoc
     - name: kot149
       url-base: https://github.com/kot149
+    - name: cormoran
+      url-base: https://github.com/cormoran
   projects:
     - name: zmk
-      remote: zmkfirmware
-      revision: v0.3
-      import: app/west.yml
+      remote: cormoran
+      revision: v0.3+custom-studio-protocol
+      import:
+        file: app/west.yml
     - name: zmk-component-bmp-boost
       remote: sekigon-gonnoc
       import: west.yml
@@ -32,5 +35,11 @@ manifest:
     - name: zmk-layout-shift
       remote: kot149
       revision: v2
+    - name: zmk-feature-custom-settings
+      remote: cormoran
+      revision: main
+    - name: zmk-module-runtime-input-processor
+      remote: cormoran
+      revision: main
   self:
     path: config
