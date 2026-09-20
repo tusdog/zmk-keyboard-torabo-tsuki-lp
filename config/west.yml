@@ -47,5 +47,14 @@ manifest:
       remote: cormoran
       # v0.3-era revision with split activity-settings synchronization.
       revision: ad1c995cf910ca989ecd6352a1d0b41ccb18362c
+    - name: zmk-feature-custom-settings
+      remote: cormoran
+      revision: main
+    - name: zmk-feature-runtime-combo
+      remote: cormoran
+      revision: main
+    - name: zmk-feature-runtime-macro
+      remote: cormoran
+      revision: main
   self:
     path: config
