@@ -11,7 +11,7 @@ manifest:
   projects:
     - name: zmk
       remote: cormoran
-      revision: v0.3+custom-studio-protocol
+      revision: v0.3-branch+dya
       import:
         file: app/west.yml
     - name: zmk-component-bmp-boost
@@ -35,13 +35,9 @@ manifest:
     - name: zmk-layout-shift
       remote: kot149
       revision: v2
-    - name: zmk-feature-custom-settings
-      remote: cormoran
-      # Last revision before Zephyr/Kconfig "configdefault" became required.
-      # Keeps compatibility with the ZMK v0.3 toolchain used by bmp_boost.
-      revision: 56ad4260388486e513f07c45a6ab1a404e3e7878
     - name: zmk-module-runtime-input-processor
       remote: cormoran
-      revision: main
+      # v0.3-era revision from before the custom-settings storage migration.
+      revision: dbf92f764de8b6ffd60bf5850514302875fe2570
   self:
     path: config
