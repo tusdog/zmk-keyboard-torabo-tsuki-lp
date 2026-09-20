@@ -150,7 +150,12 @@
         base_layer {
             display-name = "Base JIS";
             bindings = <
-                /* row 0 */
+                /*
+                 * row 0
+                 *
+                 * Right:
+                 * 8  9  0  -  ^  Backspace
+                 */
                 &kp ESC    &kp N1     &kp N2     &kp N3     &kp N4       &kp N5
                 &kp N8     &kp N9     &kp N0     &kp MINUS  &kp JP_CARET &kp BSPC
 
@@ -161,25 +166,29 @@
                 /*
                  * row 2
                  *
+                 * Left:
+                 * Ctrl  A  S  D  F  G  6
+                 *
                  * F:
                  *   tap  -> F
                  *   hold -> Scroll mode
                  */
                 &kp LCTRL  &kp A      &kp S      &kp D      &lt SCROLL F &kp G      &kp N6
-                &kp N7     &kp H      &kp J      &kp K      &kp L        &kp SEMI   &kp JP_COLON
+                &kp JP_LBKT  &kp H    &kp J      &kp K      &kp L        &kp SEMI   &kp JP_COLON
 
                 /*
                  * row 3
                  *
-                 * Right hand:
-                 * ]  N  M  ,  /  ↑  _
+                 * Left:
+                 * Shift  Z  X  C  V  B  7
                  *
-                 * /:
-                 *   single tap -> /
-                 *   double tap -> .
+                 * 7 is directly below 6.
+                 *
+                 * Right:
+                 * ]  N  M  ,  /  ↑  _
                  */
-                &kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp JP_AT
-                &kp JP_RBKT  &kp N    &kp M      &comma_td   &kp JP_QMARK    &kp UP      &kp JP_UNDER
+                &kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp N7
+                &kp JP_RBKT  &kp N    &kp M      &comma_td   &kp JP_QMARK &kp UP     &kp JP_UNDER
 
                 /*
                  * row 4
@@ -204,9 +213,17 @@
         };
 
         nav_layer {
-            display-name = "Nav";
+            display-name = "Layer 1";
             bindings = <
-                /* row 0: Base 1-5 / 8-^ -> F1-F5 / F8-F12 */
+                /*
+                 * row 0
+                 *
+                 * Base:
+                 * Esc  1  2  3  4  5 | 8  9  0  -  ^  BSPC
+                 *
+                 * Layer 1:
+                 * --- F1 F2 F3 F4 F5 | F8 F9 F10 F11 F12 BSPC
+                 */
                 &trans  &kp F1     &kp F2     &kp F3     &kp F4     &kp F5
                 &kp F8  &kp F9     &kp F10    &kp F11    &kp F12    &kp BSPC
 
@@ -217,18 +234,21 @@
                 /*
                  * row 2
                  *
-                 * Base 6 -> F6
-                 * Base 7 -> F7
+                 * physical 6 -> F6
                  *
                  * physical F:
                  *   tap  -> Ctrl+F
                  *   hold -> Scroll mode
                  */
                 &trans  &kp LC(A)  &kp LC(S)  &trans     &lt SCROLL LC(F)  &trans  &kp F6
-                &kp F7  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
+                &trans  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
 
-                /* row 3 */
-                &trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(B)  &trans
+                /*
+                 * row 3
+                 *
+                 * physical 7 -> F7
+                 */
+                &trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(B)  &kp F7
                 &trans  &kp LC(N)  &kp LC(M)  &kp LS(COMMA)  &kp LS(DOT)  &kp LG(UP)  &trans
 
                 /* row 4 */
@@ -238,11 +258,27 @@
         };
 
         shortcut_layer {
-            display-name = "Shortcut";
+            display-name = "Layer 2";
             bindings = <
-                /* row 0: Base 1-5 / 8-0 -> Ctrl + Win/Cmd + number */
-                &trans  &kp LC(LG(N1))  &kp LC(LG(N2))  &kp LC(LG(N3))  &kp LC(LG(N4))  &kp LC(LG(N5))
-                &kp LC(LG(N8))  &kp LC(LG(N9))  &kp LC(LG(N0))  &kp LS(MINUS)  &kp LS(JP_CARET)  &kp BSPC
+                /*
+                 * row 0
+                 *
+                 * Base 1-5 / 8-0:
+                 * Ctrl + Win/Cmd + number
+                 */
+                &trans
+                &kp LC(LG(N1))
+                &kp LC(LG(N2))
+                &kp LC(LG(N3))
+                &kp LC(LG(N4))
+                &kp LC(LG(N5))
+
+                &kp LC(LG(N8))
+                &kp LC(LG(N9))
+                &kp LC(LG(N0))
+                &kp LS(MINUS)
+                &kp LS(JP_CARET)
+                &kp BSPC
 
                 /* row 1 */
                 &trans  &trans  &kp LG(W)  &msc SCRL_RIGHT  &msc SCRL_LEFT  &msc SCRL_UP
@@ -251,19 +287,48 @@
                 /*
                  * row 2
                  *
-                 * Base 6 -> Ctrl+Win/Cmd+6
-                 * Base 7 -> Ctrl+Win/Cmd+7
+                 * physical 6 -> Ctrl + Win/Cmd + 6
                  *
                  * physical F:
                  *   tap  -> GUI+F
                  *   hold -> Scroll mode
                  */
-                &trans  &kp LG(A)  &kp LG(S)  &trans  &lt SCROLL LG(F)  &msc SCRL_DOWN  &kp LC(LG(N6))
-                &kp LC(LG(N7))  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &kp LS(JP_COLON)  &kp LS(JP_RBKT)
+                &trans
+                &kp LG(A)
+                &kp LG(S)
+                &trans
+                &lt SCROLL LG(F)
+                &msc SCRL_DOWN
+                &kp LC(LG(N6))
 
-                /* row 3 */
-                &trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)  &trans
-                &trans  &kp LG(N)  &kp LG(M)  &kp LS(COMMA)  &kp LS(DOT)  &kp LG(UP)  &kp JP_RO
+                &kp JP_LBKT
+                &msc SCRL_DOWN
+                &kp LEFT
+                &kp DOWN
+                &kp RIGHT
+                &kp LS(JP_COLON)
+                &kp LS(JP_RBKT)
+
+                /*
+                 * row 3
+                 *
+                 * physical 7 -> Ctrl + Win/Cmd + 7
+                 */
+                &trans
+                &kp LG(Z)
+                &kp LG(X)
+                &kp LG(C)
+                &kp LG(V)
+                &kp LG(B)
+                &kp LC(LG(N7))
+
+                &trans
+                &kp LG(N)
+                &kp LG(M)
+                &kp LS(COMMA)
+                &kp LS(DOT)
+                &kp LG(UP)
+                &kp JP_RO
 
                 /* row 4 */
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -323,7 +388,14 @@
                  * L = MB4 / Back
                  * ; = MB5 / Forward
                  */
-                &trans  &kp LG(N0)  &kp LG(MINUS)  &kp LG(SEMI)  &trans  &trans  &bt BT_SEL 0
+                &trans
+                &kp LG(N0)
+                &kp LG(MINUS)
+                &kp LG(SEMI)
+                &trans
+                &trans
+                &bt BT_SEL 0
+
                 &bt BT_SEL 2
                 &scroll_up
                 &mkp MB1
@@ -342,7 +414,13 @@
                  * M = Scroll Left
                  * , = Scroll Right
                  */
-                &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_SEL 1
+                &trans
+                &trans
+                &trans
+                &trans
+                &trans
+                &trans
+                &bt BT_SEL 1
 
                 &bt BT_SEL 3
                 &scroll_down
@@ -383,8 +461,21 @@
                 &trans  &trans  &trans  &trans  &trans  &trans
 
                 /* row 2 */
-                &kp LG(MINUS)  &kp LG(N0)  &kp LG(LS(SEMI))  &trans  &trans  &trans  &trans
-                &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &kp LG(MINUS)
+                &kp LG(N0)
+                &kp LG(LS(SEMI))
+                &trans
+                &trans
+                &trans
+                &trans
+
+                &trans
+                &trans
+                &trans
+                &trans
+                &trans
+                &trans
+                &trans
 
                 /* row 3 */
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans
