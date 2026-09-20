@@ -497,7 +497,7 @@
  *   Trackball X/Y -> Scroll
  *
  * スクロール量:
- *   1/6
+ *   DYA Studio の scroll runtime input processor で変更可能
  */
 &pointing_listener {
     scroll_mode {
@@ -505,6 +505,12 @@
         input-processors =
             <&zip_xy_to_scroll_mapper>,
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
-            <&zip_scroll_scaler 1 12>;
+            <&scroll_runtime_input_processor>;
     };
+};
+
+/* Preserve the previous scroll sensitivity as the DYA Studio default. */
+&scroll_runtime_input_processor {
+    scale-multiplier = <1>;
+    scale-divisor = <12>;
 };
