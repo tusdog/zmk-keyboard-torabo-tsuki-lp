@@ -152,7 +152,7 @@
             bindings = <
                 /* row 0 */
                 &kp ESC    &kp N1     &kp N2     &kp N3     &kp N4       &kp N5
-                &kp N7     &kp N8     &kp N9     &kp N0     &kp MINUS    &mt BSPC JP_CARET
+                &kp N8     &kp N9     &kp N0     &kp MINUS  &kp JP_CARET &kp BSPC
 
                 /* row 1 */
                 &kp TAB    &kp Q      &kp W      &kp E      &kp R        &kp T
@@ -166,7 +166,7 @@
                  *   hold -> Scroll mode
                  */
                 &kp LCTRL  &kp A      &kp S      &kp D      &lt SCROLL F &kp G      &kp N6
-                &kp JP_LBKT  &kp H    &kp J      &kp K      &kp L        &kp SEMI   &kp JP_COLON
+                &kp N7     &kp H      &kp J      &kp K      &kp L        &kp SEMI   &kp JP_COLON
 
                 /*
                  * row 3
@@ -206,7 +206,7 @@
         nav_layer {
             display-name = "Nav";
             bindings = <
-                /* row 0 */
+                /* row 0: Base 1-5 / 8-^ -> F1-F5 / F8-F12 */
                 &trans  &kp F1     &kp F2     &kp F3     &kp F4     &kp F5
                 &kp F8  &kp F9     &kp F10    &kp F11    &kp F12    &kp BSPC
 
@@ -216,6 +216,9 @@
 
                 /*
                  * row 2
+                 *
+                 * Base 6 -> F6
+                 * Base 7 -> F7
                  *
                  * physical F:
                  *   tap  -> Ctrl+F
@@ -237,7 +240,7 @@
         shortcut_layer {
             display-name = "Shortcut";
             bindings = <
-                /* row 0: Ctrl + Win/Cmd + number */
+                /* row 0: Base 1-5 / 8-0 -> Ctrl + Win/Cmd + number */
                 &trans  &kp LC(LG(N1))  &kp LC(LG(N2))  &kp LC(LG(N3))  &kp LC(LG(N4))  &kp LC(LG(N5))
                 &kp LC(LG(N8))  &kp LC(LG(N9))  &kp LC(LG(N0))  &kp LS(MINUS)  &kp LS(JP_CARET)  &kp BSPC
 
@@ -248,16 +251,19 @@
                 /*
                  * row 2
                  *
+                 * Base 6 -> Ctrl+Win/Cmd+6
+                 * Base 7 -> Ctrl+Win/Cmd+7
+                 *
                  * physical F:
                  *   tap  -> GUI+F
                  *   hold -> Scroll mode
                  */
-                &trans  &kp LG(A)  &kp LG(S)  &trans  &lt SCROLL LG(F)  &msc SCRL_DOWN  &trans
-                &kp JP_LBKT  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &kp LS(JP_COLON)  &kp LS(JP_RBKT)
+                &trans  &kp LG(A)  &kp LG(S)  &trans  &lt SCROLL LG(F)  &msc SCRL_DOWN  &kp LC(LG(N6))
+                &kp LC(LG(N7))  &msc SCRL_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &kp LS(JP_COLON)  &kp LS(JP_RBKT)
 
                 /* row 3 */
-                &trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)  &kp LC(LG(N6))
-                &kp LC(LG(N7))  &kp LG(N)  &kp LG(M)  &kp LS(COMMA)  &kp LS(DOT)  &kp LG(UP)  &kp JP_RO
+                &trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)  &trans
+                &trans  &kp LG(N)  &kp LG(M)  &kp LS(COMMA)  &kp LS(DOT)  &kp LG(UP)  &kp JP_RO
 
                 /* row 4 */
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans
