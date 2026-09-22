@@ -1,18 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-description: Toggle vertical scroll direction in RAM for runtime input processors
+description: Toggle RAM-only vertical scroll direction
 
 compatible: "zmk,behavior-scroll-direction-toggle"
 
 include: zero_param.yaml
-
-properties:
-  processor-name:
-    type: string
-    required: true
-    description: Primary runtime input processor name
-
-  secondary-processor-name:
-    type: string
-    required: true
-    description: Secondary runtime input processor name kept in sync
