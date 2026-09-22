@@ -1,0 +1,3 @@
+name: input-split-trackball-listener
+append:
+  EXTRA_DTC_OVERLAY_FILE: input-split-trackball-listener.overlay
