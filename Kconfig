@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# bmp_boost is a dedicated ZMK controller board. Its external board module
+# predates Zephyr 4.1's explicit ZMK board-variant compatibility marker, so
+# mark it compatible here until the upstream component provides that marker.
+config ZMK_BOARD_COMPAT
+    default y if BOARD_BMP_BOOST
