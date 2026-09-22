@@ -1,6 +1,6 @@
 if(CONFIG_SHIELD_TORABO_TSUKI_LP_LEFT OR CONFIG_SHIELD_TORABO_TSUKI_LP_RIGHT)
   zephyr_library()
-  zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
+  zephyr_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${APPLICATION_SOURCE_DIR}/include)
 
   # Stability build:
   # Do not compile src/board.c. That file dynamically renegotiates the
