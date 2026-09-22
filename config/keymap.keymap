@@ -94,20 +94,11 @@
             compatible = "zmk,behavior-scroll-direction-toggle";
             #binding-cells = <0>;
             display-name = "Scroll Reverse";
-            processor-name = "scroll";
-            secondary-processor-name = "scrkey";
         };
     };
 
-    scroll_key_runtime_input_processor: scroll_key_runtime_input_processor {
-        compatible = "zmk,input-processor-runtime";
-        processor-label = "scrkey";
-        type = <INPUT_EV_REL>;
-        x-codes = <INPUT_REL_HWHEEL>;
-        y-codes = <INPUT_REL_WHEEL>;
-        scale-multiplier = <1>;
-        scale-divisor = <1>;
-        rotation-degrees = <0>;
+    scroll_reverse_input_processor: scroll_reverse_input_processor {
+        compatible = "zmk,input-processor-scroll-reverse";
         #input-processor-cells = <0>;
     };
 
@@ -519,11 +510,11 @@
 };
 
 /*
- * Keep direct Scroll Up/Down keys at their existing speed, but make their
- * vertical direction follow the same RAM-only reverse state as the trackball.
+ * Keep direct Scroll Up/Down keys at their existing speed, but run them through
+ * the same final RAM-only vertical reverse processor as trackball scrolling.
  */
 &msc_input_listener {
-    input-processors = <&scroll_key_runtime_input_processor>;
+    input-processors = <&scroll_reverse_input_processor>;
 };
 
 /*
@@ -542,7 +533,8 @@
         input-processors =
             <&zip_xy_to_scroll_mapper>,
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
-            <&scroll_runtime_input_processor>;
+            <&scroll_runtime_input_processor>,
+            <&scroll_reverse_input_processor>;
     };
 };
 
