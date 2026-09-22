@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+description: RAM-only vertical scroll direction reverser
+
+compatible: "zmk,input-processor-scroll-reverse"
+
+include: ip_zero_param.yaml
