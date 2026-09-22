@@ -11,47 +11,48 @@ manifest:
   projects:
     - name: zmk
       remote: cormoran
-      revision: main+dya
+      revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8
       import:
         file: app/west.yml
     - name: zmk-component-bmp-boost
       remote: sekigon-gonnoc
       import: west.yml
-      revision: master
+      revision: 2f5567523b6f0bc39575d48ed746ed9d635edf8b
     - name: zmk-feature-status-led
       remote: sekigon-gonnoc
-      revision: main
+      revision: 572d0e16ecdd6b6d57e96461643cc55e7b9164d3
     - name: zmk-driver-paw3222
       remote: sekigon-gonnoc
-      revision: torabo-tsuki
+      revision: 0e1835c57f88d215ce401b6d0901f361629621fc
     - name: zmk-driver-iqs7211e
       remote: sekigon-gonnoc
+      revision: 436d3c42172abf812ec104521f29384fc02fc50e
     - name: zmk-feature-cdc-acm-bootloader-trigger
       remote: sekigon-gonnoc
-      revision: v0.2
+      revision: 3fc210f840433bb9204a510f3a2c78b4fa11482f
     - name: zmk-feature-non-lipo-battery-management
       remote: sekigon-gonnoc
-      revision: main
+      revision: 43fa56fb7d1e065393e926b6caa0ea02cb86eca7
     - name: zmk-layout-shift
       remote: kot149
-      revision: v2
+      revision: dd1414b43739ac70a6c6dc36ff378b70824a6bc6
     - name: zmk-module-runtime-input-processor
       remote: cormoran
-      revision: main
+      revision: 43618985f8c9d5457cc333b7ca0733f2d361911e
     - name: zmk-module-ble-management
       remote: cormoran
-      revision: main
+      revision: 57738cc4fc6ba80e82a7ac57741a0339cb186cd4
     - name: zmk-module-settings-rpc
       remote: cormoran
-      revision: main
+      revision: 78f86df9e6c5edaf57bef3ccbd7f360cfdf49291
     - name: zmk-feature-custom-settings
       remote: cormoran
-      revision: main
+      revision: c6a7fef3a3be3d3ace5de9a4b0628c6418cd1f3f
     - name: zmk-feature-runtime-combo
       remote: cormoran
-      revision: main
+      revision: d9490e7b5d41c516221d131241009e81740efcee
     - name: zmk-feature-runtime-macro
       remote: cormoran
-      revision: main
+      revision: 38530962eb7061b60efcb98e84585cfb1f0cb6de
   self:
     path: config
