@@ -7,9 +7,9 @@ branch and prioritizes reliable wireless operation over aggressive power saving.
 
 - Removed the custom split-BLE connection-interval power manager from the
   firmware build. The central/peripheral link remains on ZMK's standard fixed
-  15 ms split interval instead of changing after 5 / 15 / 30 seconds.
+  7.5 ms split interval instead of changing after 5 / 15 / 30 seconds.
 - Explicitly keeps the standard split BLE baseline:
-  - interval: 12 (15 ms)
+  - interval: 6 (7.5 ms)
   - latency: 30
   - supervision timeout: 400
 - Keeps `CONFIG_ZMK_BLE_EXPERIMENTAL_CONN=y` from the existing shield config.
