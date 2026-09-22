@@ -15,6 +15,7 @@
 #include <behaviors.dtsi>
 #include <behaviors/runtime_macro.dtsi>
 #include <input/processors.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -89,6 +90,25 @@
 
             bindings = <&kp JP_QMARK>, <&kp DOT>;
         };
+        scroll_reverse: scroll_direction_toggle {
+            compatible = "zmk,behavior-scroll-direction-toggle";
+            #binding-cells = <0>;
+            display-name = "Scroll Reverse";
+            processor-name = "scroll";
+            secondary-processor-name = "scrkey";
+        };
+    };
+
+    scroll_key_runtime_input_processor: scroll_key_runtime_input_processor {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "scrkey";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_HWHEEL>;
+        y-codes = <INPUT_REL_WHEEL>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        rotation-degrees = <0>;
+        #input-processor-cells = <0>;
     };
 
     /*
@@ -344,6 +364,7 @@
          * U = Ctrl + Left
          * I = Ctrl + Right
          * O = Show All Windows
+         * R = Scroll Reverse (RAM only)
          *
          * 6 = BT 0
          * . = BT 1
@@ -367,8 +388,8 @@
                 &trans  &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &kp BSPC
 
-                /* row 1 */
-                &trans  &trans  &trans  &trans  &trans  &trans
+                /* row 1: physical R = Scroll Reverse */
+                &trans  &trans  &trans  &trans  &scroll_reverse  &trans
 
                 &kp C_AC_DESKTOP_SHOW_ALL_APPLICATIONS
                 &kp LC(LEFT)
@@ -488,6 +509,14 @@
             >;
         };
     };
+};
+
+/*
+ * Keep direct Scroll Up/Down keys at their existing speed, but make their
+ * vertical direction follow the same RAM-only reverse state as the trackball.
+ */
+&msc_input_listener {
+    input-processors = <&scroll_key_runtime_input_processor>;
 };
 
 /*
