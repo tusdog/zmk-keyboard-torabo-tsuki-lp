@@ -1,0 +1,44 @@
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+
+/*
+ * Split trackball listener for the double-ball build.
+ *
+ * Keep the remote trackball on the same processing path as the local
+ * trackball:
+ *   normal: XY -> fixed mounting correction -> runtime pointer processor
+ *   Scroll layer (4): XY -> scroll -> same scroll transform -> runtime scroll
+ *
+ * This is intentionally separate from input-split-listener, which is for the
+ * mini trackpad and has trackpad-specific filtering/scaling.
+ */
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        pointing_device_split: pointing_device_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    pointing_device_split_listener: pointing_device_split_listener {
+        compatible = "zmk,input-listener";
+        device = <&pointing_device_split>;
+        status = "okay";
+
+        input-processors = <
+            &zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)
+            &mouse_runtime_input_processor
+        >;
+
+        scroll_mode {
+            layers = <4>;
+            input-processors =
+                <&zip_xy_to_scroll_mapper>,
+                <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
+                <&scroll_runtime_input_processor>;
+        };
+    };
+};
