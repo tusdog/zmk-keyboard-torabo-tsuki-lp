@@ -356,6 +356,7 @@
          * I = Ctrl + Right
          * O = Show All Windows
          * R = Scroll Reverse (RAM only)
+         * T = Studio Unlock / BLE discovery
          * Esc = Clear selected BT profile
          *
          * 6 = BT 0
@@ -381,8 +382,8 @@
                 &bt BT_CLR  &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &kp BSPC
 
-                /* row 1: physical R = Scroll Reverse */
-                &trans  &trans  &trans  &trans  &scroll_reverse  &trans
+                /* row 1: physical R = Scroll Reverse, T = Studio Unlock */
+                &trans  &trans  &trans  &trans  &scroll_reverse  &studio_unlock
 
                 &kp C_AC_DESKTOP_SHOW_ALL_APPLICATIONS
                 &kp LC(LEFT)
