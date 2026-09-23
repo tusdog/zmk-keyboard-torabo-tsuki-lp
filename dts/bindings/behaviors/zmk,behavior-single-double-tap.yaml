@@ -1,0 +1,13 @@
+# Copyright (c) 2026
+# SPDX-License-Identifier: MIT
+
+description: Configurable single/double tap behavior
+
+compatible: "zmk,behavior-single-double-tap"
+
+include: two_param.yaml
+
+properties:
+  tapping-term-ms:
+    type: int
+    default: 200

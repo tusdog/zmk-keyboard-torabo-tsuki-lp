@@ -90,6 +90,18 @@
 
             bindings = <&kp JP_QMARK>, <&kp DOT>;
         };
+        /*
+         * Runtime-selectable tap dance for DYA Studio:
+         *   param1 -> single tap key
+         *   param2 -> double tap key
+         */
+        single_double_tap: single_double_tap {
+            compatible = "zmk,behavior-single-double-tap";
+            #binding-cells = <2>;
+            display-name = "Single / Double Tap";
+            tapping-term-ms = <200>;
+        };
+
         scroll_reverse: scroll_direction_toggle {
             compatible = "zmk,behavior-scroll-direction-toggle";
             #binding-cells = <0>;
