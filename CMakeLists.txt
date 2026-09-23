@@ -10,6 +10,9 @@ if(CONFIG_SHIELD_TORABO_TSUKI_LP_LEFT OR CONFIG_SHIELD_TORABO_TSUKI_LP_RIGHT)
     src/mini_trackpad_init_reg.c
     src/behavior_scroll_direction_toggle.c
     src/input_processor_scroll_reverse.c
-    src/behavior_single_double_tap.c
   )
+
+  # Keymap behaviors execute on the split central. Peripheral-only builds do
+  # not link the keycode event implementation used by this behavior.
+  zephyr_library_sources_ifdef(CONFIG_ZMK_SPLIT_ROLE_CENTRAL src/behavior_single_double_tap.c)
 endif()
