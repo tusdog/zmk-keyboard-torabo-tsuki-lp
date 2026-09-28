@@ -28,6 +28,12 @@
 #define MOUSE     3
 #define SCROLL    4
 
+#if defined(CONFIG_ZMK_RUNTIME_MACRO)
+#define CMD_CLICK_BINDING &rmacro 0
+#else
+#define CMD_CLICK_BINDING &trans
+#endif
+
 /* JIS aliases. These are HID positions interpreted by a JIS host layout. */
 #define JP_CARET  EQUAL          /* ^ / ~ */
 #define JP_AT     LEFT_BRACKET   /* @ / ` */
@@ -37,30 +43,9 @@
 #define JP_YEN    INT3           /* ¥ / | */
 #define JP_RO     INT1           /* \ / _ (ろ key) */
 #define JP_QMARK  FSLH           /* / (Shift: ?) */
-#define JP_UNDER  LS(INT1)       /* _ */
 
 / {
     behaviors {
-        /*
-         * Generic layer-tap:
-         *   hold -> &mo <layer>
-         *   tap  -> &kp <key>
-         *
-         * quick-tap-ms allows tap -> quick second hold to keep the tap-side
-         * key held. This is especially useful for Backspace auto-repeat.
-         */
-        my_lt: my_layer_tap {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            display-name = "Quick Layer-Tap";
-
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <250>;
-
-            bindings = <&mo>, <&kp>;
-        };
-
         /*
          * Tap Dance:
          *   single tap -> ,
@@ -70,28 +55,12 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             display-name = "Comma / Dot";
-
             tapping-term-ms = <200>;
-
             bindings = <&kp COMMA>, <&kp DOT>;
         };
 
         /*
-         * Tap Dance:
-         *   single tap -> /
-         *   double tap -> .
-         */
-        slash_td: slash_tap_dance {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            display-name = "Slash / Dot";
-
-            tapping-term-ms = <200>;
-
-            bindings = <&kp JP_QMARK>, <&kp DOT>;
-        };
-        /*
-         * Runtime-selectable tap dance for DYA Studio:
+         * Runtime-selectable single/double tap for DYA Studio:
          *   param1 -> single tap key
          *   param2 -> double tap key
          */
@@ -114,59 +83,26 @@
         #input-processor-cells = <0>;
     };
 
+#if defined(CONFIG_ZMK_RUNTIME_MACRO)
     /*
-     * Zero-parameter wrappers around mouse scrolling.
-     * These can be exposed as user-defined behaviors in ZMK Studio.
+     * Factory runtime macro used by the Mouse / BT layer.
+     * Existing persisted macro content with the same name wins over this seed.
+     *
+     * cmd_click:
+     *   press LGUI -> tap left click -> wait 40 ms -> release LGUI
      */
-    macros {
-        scroll_up: scroll_up {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            display-name = "Scroll Up";
-            wait-ms = <0>;
-
+    runtime_macro_defaults {
+        cmd_click_default {
+            compatible = "cormoran,runtime-macro-default";
+            macro-name = "cmd_click";
             bindings =
-                <&macro_press &msc SCRL_UP>,
-                <&macro_pause_for_release>,
-                <&macro_release &msc SCRL_UP>;
-        };
-
-        scroll_down: scroll_down {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            display-name = "Scroll Down";
-            wait-ms = <0>;
-
-            bindings =
-                <&macro_press &msc SCRL_DOWN>,
-                <&macro_pause_for_release>,
-                <&macro_release &msc SCRL_DOWN>;
-        };
-
-        scroll_left: scroll_left {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            display-name = "Scroll Left";
-            wait-ms = <0>;
-
-            bindings =
-                <&macro_press &msc SCRL_LEFT>,
-                <&macro_pause_for_release>,
-                <&macro_release &msc SCRL_LEFT>;
-        };
-
-        scroll_right: scroll_right {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            display-name = "Scroll Right";
-            wait-ms = <0>;
-
-            bindings =
-                <&macro_press &msc SCRL_RIGHT>,
-                <&macro_pause_for_release>,
-                <&macro_release &msc SCRL_RIGHT>;
+                <&macro_press &kp LGUI>,
+                <&macro_tap &mkp MB1>,
+                <&macro_wait_time 40>,
+                <&macro_release &kp LGUI>;
         };
     };
+#endif
 
     keymap {
         compatible = "zmk,keymap";
@@ -198,7 +134,7 @@
                  *   hold -> Scroll mode
                  */
                 &kp LCTRL  &kp A      &kp S      &kp D      &lt SCROLL F &kp G      &kp N6
-                &kp JP_LBKT  &kp H    &kp J      &kp K      &kp L        &kp SEMI   &kp JP_COLON
+                &kp JP_LBKT  &kp H    &kp J      &lt SCROLL K  &kp L      &kp SEMI   &kp JP_COLON
 
                 /*
                  * row 3
@@ -212,7 +148,7 @@
                  * ]  N  M  ,  /  ↑  _
                  */
                 &kp LSHFT  &kp Z      &kp X      &kp C      &kp V        &kp B      &kp N7
-                &kp JP_RBKT  &kp N    &kp M      &comma_td   &kp JP_QMARK &kp UP     &kp JP_UNDER
+                &kp JP_RBKT  &kp N    &kp M      &comma_td   &kp JP_QMARK &kp UP     &mt LGUI JP_RO
 
                 /*
                  * row 4
@@ -222,14 +158,14 @@
                  *   hold -> Mouse / BT
                  */
                 &kp LGUI   &kp LALT   &kp LGUI   &kp JP_AT
-                &my_lt MOUSE BSPC
-                &my_lt SHORTCUT SPACE
+                &kp BSPC
+                &lt SHORTCUT SPACE
                 &lt MOUSE LANGUAGE_2
 
-                &mt LGUI LANGUAGE_1
-                &lt NAV RET
-                &lt NAV COMMA
-                &lt MOUSE DOT
+                &lt NAV LANGUAGE_1
+                &kp RET
+                &trans
+                &trans
                 &kp LEFT
                 &kp DOWN
                 &kp RIGHT
@@ -363,111 +299,85 @@
         /*
          * Mouse / BT
          *
-         * Y = Show All Applications
-         * U = Ctrl + Left
-         * I = Ctrl + Right
-         * O = Show All Windows
+         * Esc = clear selected BT profile
+         * W = Cmd+W
+         * E = Ctrl+Alt+Cmd+E
          * R = Scroll Reverse (RAM only)
          * T = Studio Unlock / BLE discovery
-         * Esc = Clear selected BT profile
          *
-         * 6 = BT 0
-         * . = BT 1
-         * [ = BT 2
-         * ] = BT 3
-         * LANGUAGE_2 key = BT 4
+         * Right number row: F7 / F8 / F9 / -- / -- / Reset
+         * Y = Show All Windows (Consumer 0x29F)
+         * U/I = Ctrl+Left/Right
+         * O/P = Cmd+O/P
          *
-         * H = Scroll Up
-         * N = Scroll Down
-         * M = Scroll Left
-         * , = Scroll Right
-         *
-         * J = Left Click
-         * K = Right Click
-         * L = Back
-         * ; = Forward
+         * G = BT 4, 6 = BT 0
+         * [ = BT 2, H = Cmd+Space
+         * J/K/L/; = Left / Right / Button4 / Button5
+         * 7 = BT 1, ] = BT 3
+         * Z/X/C/V and N/M use Cmd shortcuts
+         * right inner thumb = runtime macro cmd_click
          */
         mouse_layer {
             display-name = "Mouse / BT";
             bindings = <
-                /* row 0: physical Esc = clear selected BT profile */
+                /* row 0 */
                 &bt BT_CLR  &trans  &trans  &trans  &trans  &trans
-                &trans  &trans  &trans  &trans  &trans  &kp BSPC
+                &kp F7      &kp F8  &kp F9  &trans  &trans  &sys_reset
 
-                /* row 1: physical R = Scroll Reverse, T = Studio Unlock */
-                &trans  &trans  &trans  &trans  &scroll_reverse  &studio_unlock
+                /* row 1 */
+                &trans
+                &trans
+                &kp LG(W)
+                &kp LC(LA(LG(E)))
+                &scroll_reverse
+                &studio_unlock
 
-                &kp C_AC_DESKTOP_SHOW_ALL_APPLICATIONS
+                &kp C_AC_DESKTOP_SHOW_ALL_WINDOWS
                 &kp LC(LEFT)
                 &kp LC(RIGHT)
-                &kp C_AC_DESKTOP_SHOW_ALL_WINDOWS
-                &trans
+                &kp LG(O)
+                &kp LG(P)
                 &trans
 
-                /*
-                 * row 2
-                 *
-                 * 6 = BT 0
-                 *
-                 * [ = BT 2
-                 * H = Scroll Up
-                 * J = MB1 / Left Click
-                 * K = MB2 / Right Click
-                 * L = MB4 / Back
-                 * ; = MB5 / Forward
-                 */
+                /* row 2 */
                 &trans
-                &kp LG(N0)
-                &kp LG(MINUS)
-                &kp LG(SEMI)
+                &kp LG(A)
+                &kp LG(S)
                 &trans
-                &trans
+                &lt SCROLL LG(F)
+                &bt BT_SEL 4
                 &bt BT_SEL 0
 
                 &bt BT_SEL 2
-                &scroll_up
+                &kp LG(SPACE)
                 &mkp MB1
                 &mkp MB2
                 &mkp MB4
                 &mkp MB5
                 &trans
 
-                /*
-                 * row 3
-                 *
-                 * . = BT 1
-                 *
-                 * ] = BT 3
-                 * N = Scroll Down
-                 * M = Scroll Left
-                 * , = Scroll Right
-                 */
+                /* row 3 */
                 &trans
-                &trans
-                &trans
-                &trans
-                &trans
+                &kp LG(Z)
+                &kp LG(X)
+                &kp LG(C)
+                &kp LG(V)
                 &trans
                 &bt BT_SEL 1
 
                 &bt BT_SEL 3
-                &scroll_down
-                &scroll_left
-                &scroll_right
+                &kp LG(N)
+                &kp LG(M)
+                &trans
                 &trans
                 &kp LG(UP)
                 &trans
 
-                /*
-                 * row 4
-                 * Left thumb trio:
-                 *   leftmost = Backspace
-                 *   LANGUAGE_2 physical key = BT profile 4
-                 */
-                &trans  &trans  &trans  &trans  &kp BSPC  &trans  &bt BT_SEL 4
+                /* row 4 */
+                &trans  &trans  &trans  &trans  &kp BSPC  &trans  &trans
 
                 &trans
-                &trans
+                CMD_CLICK_BINDING
                 &trans
                 &trans
                 &kp LG(LEFT)
@@ -479,8 +389,8 @@
         /*
          * Scroll layer
          *
-         * Fを長押ししている間だけ有効。
-         * 全キーtransparentなので、下にある通常レイヤーは維持される。
+         * F/K hold activates this layer. Most keys stay transparent; the
+         * right home-row mouse buttons remain available while scrolling.
          */
         scroll_layer {
             display-name = "Scroll";
@@ -494,21 +404,8 @@
                 &trans  &trans  &trans  &trans  &trans  &trans
 
                 /* row 2 */
-                &kp LG(MINUS)
-                &kp LG(N0)
-                &kp LG(LS(SEMI))
-                &trans
-                &trans
-                &trans
-                &trans
-
-                &trans
-                &trans
-                &trans
-                &trans
-                &trans
-                &trans
-                &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &mkp MB1  &mkp MB2  &mkp MB4  &mkp MB5  &trans
 
                 /* row 3 */
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans
